@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Html.Partial("Header")
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="display:flex">
+        <label>MA NV</label>
+        <input id="manv"/>
+    </div>
+    <div style="display:flex">
+        <label>TEN NV</label>
+        <input id="tennv"/>
+    </div>
+    <div style="display:flex">
+        <label>SoDT</label>
+        <input id="sodt"/>
+    </div>
+    <div style="display:flex">
+        <label>NgaySinh</label>
+        <input type="datetime" id="ngaysinh"/>
+    </div>
+    <div style="display:flex" id="mapb">
+        <label>MaPB</label>
+        <select>
+            @foreach(var item in ViewBag.result){
+                <option value=@item.MaPB>@item.TenPB</option>
+            }
+        </select>
+    </div>
+    <button onclick="submit()">CREATE</button>
+</body>
+<script>
+    function submit() {
+        let manv = $("#manv").val();
+        let tenv = $("#tennv").val();
+        let sodt = $("#sodt").val();
+        let ngaysinh = $("#ngaysinh").val();
+        let mapb = $("#mapb").val();
+        let obj = {MaNV: manv, TenNV: tenv, SoDT: sodt, NgaySinh: ngaysinh, MaPb: mapb}
+        $.ajax({
+            "url": "http://localhost:5221/api/employee",
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+            },
+            data: JSON.stringify(obj)
+        }).done(function () {
+            location.href = "/";
+        }).fail(function(){
+            alert("")
+        })
+
+    }
+</script>
+
+</html>

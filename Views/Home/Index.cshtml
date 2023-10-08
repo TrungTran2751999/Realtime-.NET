@@ -1,0 +1,33 @@
+﻿@* @{
+    ViewData["Title"] = "Home Page";
+} *@
+
+<div class="text-center">
+    <button>Create new</button>
+    <div style="display:flex">
+        <div>Ten nhan vien</div>
+        <input id="search"></input>
+        <button>Tim kiem</button>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <th>TenNV</th>
+                <th>SoDT</th>
+                <th>NgaySinh</th>
+                <th>TenPB</th>
+                <th></th>
+            </thead>
+            <tbody>
+                @foreach(var item in ViewBag.result){
+                    <tr>
+                        <td>@item.nv.id</td>
+                        <td>@item.nv.SoDT</td>
+                        <td>@item.nv.NgaySinh</td>
+                        <td>@item.nv.PB.TenPB</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

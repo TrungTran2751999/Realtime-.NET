@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Html.Partial("Header")
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="display:flex">
+        <label>Name</label>
+        <input id="name"/>
+    </div>
+    <div style="display:flex">
+        <label>Age</label>
+        <input id="age"/>
+    </div>
+    <div style="display:flex">
+        <label>Email</label>
+        <input id="email"/>
+    </div>
+    <div style="display:flex">
+        <label>PhoneNumber</label>
+        <input id="phonenumber"/>
+    </div>
+    <div style="display:flex">
+        <label>StudentCode</label>
+        <input id="studentcode"/>
+    </div>
+    <div style="display:flex">
+        <label>StudentGrade</label>
+        <input id="studentgrade"/>
+    </div>
+    <button onclick="submit()">CREATE</button>
+    <p>Index Student</p>
+    <table id="data-table">
+        <thead>
+            <th>id</th>
+            <th>name</th>
+            <th>age</th>
+            <th>email</th>
+        </thead>
+        <tbody>
+            @foreach(var item in ViewBag.result){
+                <tr>
+                    <td>@item.IdSystem</td>
+                    <td>@item.Name</td>
+                    <td>@item.Age</td>
+                    <td>@item.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+<script src="~/js/realtimeData.js" asp-append-version="true"></script>
+<script>
+    let datas = @Html.Raw(Json.Serialize(ViewBag.result));
+    function submit() {
+        let name = $("#name").val();
+        let age = $("#age").val();
+        let email = $("#email").val();
+        let phoneNumber = $("#phonenumber").val();
+        let studentCode = $("#studentcode").val();
+        let studentGrade = $("#studentgrade").val();
+        let obj = {Name: name, Age: age, PhoneNumber: phoneNumber, studentCode: studentCode, studentGrade: studentGrade, Email: email}
+        datas.push(obj);
+        $.ajax({
+            "url": "http://localhost:5221/api/student",
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+            },
+            data: JSON.stringify(obj)
+        }).done(function () {
+            updateRealtime(JSON.stringify(datas));
+            location.reload();
+        }).fail(function(){
+            alert("SAICMNR")
+        })
+
+    }
+</script>
+<script>
+    let a = @Html.Raw(Json.Serialize(ViewBag.result));
+    console.log(a);
+</script>
+</html>
